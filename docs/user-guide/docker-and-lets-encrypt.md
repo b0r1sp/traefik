@@ -225,6 +225,13 @@ With the `traefik.enable` label, we tell Træfik to include this container in it
 With the `frontend.rule` label, we tell Træfik that we want to route to this container if the incoming HTTP request contains the `Host` `app.my-awesome-app.org`.
 Essentially, this is the actual rule used for Layer-7 load balancing.
 
+For matching request hosts with regular expressions, use `HostRegexp` instead of `Host`:
+
+```yaml
+- "traefik.basic.frontend.rule=HostRegexp:{subdomain:[a-z]+}.my-awesome-app.org"
+- "traefik.basic.frontend.rule=HostRegexp:{subdomain:[a-zA-Z0-9-]+}.my-awesome-app.org"
+```
+
 Finally but not unimportantly, we tell Træfik to route **to** port `9000`, since that is the actual TCP/IP port the container actually listens on.
 
 ### Service labels
