@@ -314,7 +314,7 @@ The `consul` provider contains the configuration.
   passTLSCert = true
   entrypoints = ["https"] # overrides defaultEntryPoints
     [frontends.frontend2.routes.test_1]
-    rule = "Host:{subdomain:[a-z]+}.localhost"
+    rule = "HostRegexp:{subdomain:[a-z]+}.localhost"
 
   [frontends.frontend3]
   entrypoints = ["http", "https"] # overrides defaultEntryPoints
@@ -366,3 +366,25 @@ providersThrottleDuration = "5s"
 [respondingTimeouts]
 idleTimeout = "360s"
 ```
+
+## Match request hosts with regular expressions
+
+```toml
+[frontends]
+
+  [frontends.frontend1]
+  backend = "backend2"
+    [frontends.frontend1.routes.test_1]
+    rule = "HostRegexp:{subdomain:[a-z]+}.localhost"
+```
+
+```toml
+[frontends]
+
+  [frontends.frontend1]
+  backend = "backend2"
+    [frontends.frontend1.routes.test_1]
+    rule = "HostRegexp:{subdomain:[a-zA-Z0-9-]+}.localhost"
+```
+
+
